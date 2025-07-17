@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import Pizza from "./components/Pizza";
+import Order from "./components/Order";
 
 // const Pizza = (props) => {
 //   return React.createElement("div", {}, [
@@ -31,6 +32,7 @@ const App = () => {
   return (
     <div>
       <h1>Padre Gino's</h1>
+      <Order />
       <Pizza
         name="name 1"
         description="description 1"
