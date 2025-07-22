@@ -1,9 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Pizza from "./Pizza";
 
 const Order = () => {
-  const [type, setType] = useState("pepperoni");
+  const [pizzaTypes, setPizzaTypes] = useState([])
+  const [type, setType] = useState("bbq_ckn");
   const [size, setSize] = useState("M");
+
+  const selectedPizza = pizzaTypes?.find(({ id }) => id === type)
+  const pizzaPrice = selectedPizza?.sizes?.[size]
+
+  useEffect(() => {
+    async function fetchPizzaTypes() {
+      const res = await fetch('http://localhost:5173/api/pizzas')
+      const data = await res.json()
+      setPizzaTypes(data)
+    }
+    fetchPizzaTypes()
+  }, [])
 
   return (
     <div className="order">
@@ -17,9 +30,9 @@ const Order = () => {
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
-              <option value="pepperoni">The Pepperoni Pizza</option>
-              <option value="hawaiian">The Hawaiian Pizza</option>
-              <option value="big_meat">The Big Meat Pizza</option>
+              {
+                pizzaTypes?.map(({ name, id }) => <option key={id} value={id}>{name}</option>)
+              }
             </select>
           </div>
           <div>
@@ -61,11 +74,11 @@ const Order = () => {
           <button type="submit">Add to Cart</button>
           <div className="order-pizza">
             <Pizza
-              name="pepperoni"
-              description="Pepperoni pizza"
-              image="/public/pizzas/pepperoni.webp"
+              name={selectedPizza?.name}
+              description={selectedPizza?.description}
+              image={selectedPizza?.image}
             />
-            <p>$13.37</p>
+            <p>${pizzaPrice}</p>
           </div>
         </div>
       </form>

@@ -33,7 +33,7 @@ const App = () => {
     <div>
       <h1>Padre Gino's</h1>
       <Order />
-      <Pizza
+      {/* <Pizza
         name="name 1"
         description="description 1"
         image="/public/pizzas/bbq_ckn.webp"
@@ -47,7 +47,7 @@ const App = () => {
         name="name 3"
         description="description 3"
         image="/public/pizzas/brie_carre.webp"
-      />
+      /> */}
     </div>
   );
 };
